@@ -1,42 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
     tools:context=".RestaurantesActivity">
 
     <TextView
         android:id="@+id/nombreAppDentro"
         android:layout_width="353dp"
         android:layout_height="95dp"
-        android:text="Flavors of the world"
-        android:textColor="@color/black"
+        android:text="Flavors of the World"
         android:textAlignment="center"
         android:gravity="center"
-        android:ellipsize="none"
-        android:singleLine="false"
-        android:breakStrategy="simple"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="24sp"
         android:autoSizeMaxTextSize="62sp"
-        android:autoSizeStepGranularity="2sp" />
+        android:autoSizeStepGranularity="2sp"
+        android:shadowColor="#66000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:textColor="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="375dp"
         android:layout_height="520dp"
         android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/recycler_background"
+        app:layout_constraintBottom_toTopOf="@+id/btnVolver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nombreAppDentro"
         app:layout_constraintVertical_bias="0.6" />
 
+    <Button
+        android:id="@+id/btnVolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar sesión"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

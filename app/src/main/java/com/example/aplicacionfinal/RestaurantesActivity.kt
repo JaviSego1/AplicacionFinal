@@ -1,5 +1,6 @@
 package com.example.aplicacionfinal
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -58,11 +59,33 @@ class RestaurantesActivity : AppCompatActivity() {
             "Desde Lima, Perú, restaurante que fusiona lo mejor de Japón y Perú, dirigido por el chef Mitsuharu Tsumura.",
             "maido")
         )
+        listaRestaurantes.add(Restaurante(
+            "Atomix",
+            "Desde Nueva York, ofrece una experiencia gastronómica coreana moderna, con menús degustación innovadores.",
+            "atomix")
+        )
+        listaRestaurantes.add(Restaurante(
+            "Quintonil",
+            "Desde Ciudad de México, dirigido por el chef Jorge Vallejo, destaca por su reinterpretación de la cocina mexicana.",
+            "quintonil")
+        )
+        listaRestaurantes.add(Restaurante(
+            "Alchemist",
+            "Desde Copenhague, combina arte, ciencia y gastronomía en una experiencia multisensorial única.",
+            "alchemist")
+        )
 
         adapter = RestauranteAdapter(listaRestaurantes) { restaurante ->
             eliminarRestaurante(restaurante)
         }
         binding.recyclerView.adapter = adapter
+
+        // Lógica para el botón "Volver"
+        binding.btnVolver.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun eliminarRestaurante(restaurante: Restaurante) {

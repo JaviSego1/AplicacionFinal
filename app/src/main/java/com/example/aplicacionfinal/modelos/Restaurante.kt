@@ -1,7 +1,7 @@
 package com.example.aplicacionfinal.modelos
 
 data class Restaurante(
-    val titulo: String,
-    val descripcion: String,
+    var titulo: String,
+    var descripcion: String,
     val imagen: String
 )

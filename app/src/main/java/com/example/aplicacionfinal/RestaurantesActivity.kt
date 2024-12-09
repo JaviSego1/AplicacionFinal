@@ -2,6 +2,9 @@ package com.example.aplicacionfinal
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -75,9 +78,11 @@ class RestaurantesActivity : AppCompatActivity() {
             "alchemist")
         )
 
-        adapter = RestauranteAdapter(listaRestaurantes) { restaurante ->
-            eliminarRestaurante(restaurante)
-        }
+        adapter = RestauranteAdapter(
+            listaRestaurantes,
+            onEdit = { restaurante -> editarRestaurante(restaurante) },
+            onEliminarClick = { restaurante -> eliminarRestaurante(restaurante) }
+        )
         binding.recyclerView.adapter = adapter
 
         // Lógica para el botón "Volver"
@@ -88,6 +93,44 @@ class RestaurantesActivity : AppCompatActivity() {
         }
     }
 
+    private fun editarRestaurante(restaurante: Restaurante) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_editar_restaurante, null)
+        val etTitulo = dialogView.findViewById<EditText>(R.id.etTitulo)
+        val etDescripcion = dialogView.findViewById<EditText>(R.id.etDescripcion)
+        val btnGuardar = dialogView.findViewById<Button>(R.id.btnGuardar)
+
+        // Pre-cargar los valores actuales del restaurante en los campos del diálogo
+        etTitulo.setText(restaurante.titulo)
+        etDescripcion.setText(restaurante.descripcion)
+
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Editar Restaurante")
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        // Acción de guardar los cambios
+        btnGuardar.setOnClickListener {
+            val nuevoTitulo = etTitulo.text.toString()
+            val nuevaDescripcion = etDescripcion.text.toString()
+
+            if (nuevoTitulo.isNotEmpty() && nuevaDescripcion.isNotEmpty()) {
+                // Actualizar el restaurante en la lista
+                restaurante.titulo = nuevoTitulo
+                restaurante.descripcion = nuevaDescripcion
+
+                // Notificar al adaptador que se ha hecho un cambio
+                adapter.notifyItemChanged(listaRestaurantes.indexOf(restaurante))
+                dialog.dismiss() // Cerrar el diálogo
+            } else {
+                Toast.makeText(this, "Todos los campos deben ser llenados", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        dialog.show()
+    }
+
+
     private fun eliminarRestaurante(restaurante: Restaurante) {
         val position = listaRestaurantes.indexOf(restaurante)
         if (position != -1) {
@@ -95,4 +138,6 @@ class RestaurantesActivity : AppCompatActivity() {
             adapter.notifyItemRemoved(position)
         }
     }
+
+
 }

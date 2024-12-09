@@ -1,7 +1,6 @@
 package com.example.aplicacionfinal.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aplicacionfinal.databinding.ItemRestauranteBinding
@@ -9,11 +8,13 @@ import com.example.aplicacionfinal.modelos.Restaurante
 
 class RestauranteAdapter(
     private val restaurantes: MutableList<Restaurante>,
+    private val onEdit: (Restaurante) -> Unit,
     private val onEliminarClick: (Restaurante) -> Unit
+
 ) : RecyclerView.Adapter<RestauranteAdapter.RestauranteViewHolder>() {
 
     class RestauranteViewHolder(private val binding: ItemRestauranteBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(restaurante: Restaurante, onEliminarClick: (Restaurante) -> Unit) {
+        fun bind(restaurante: Restaurante, onEdit: (Restaurante) -> Unit, onEliminarClick: (Restaurante) -> Unit) {
             binding.titulo.text = restaurante.titulo
             binding.descripcion.text = restaurante.descripcion
 
@@ -23,6 +24,11 @@ class RestauranteAdapter(
             binding.imagenEliminar.setOnClickListener {
                 onEliminarClick(restaurante)
             }
+
+            binding.imagenEditar.setOnClickListener {
+                onEdit(restaurante)
+            }
+
         }
     }
 
@@ -33,7 +39,7 @@ class RestauranteAdapter(
 
     override fun onBindViewHolder(holder: RestauranteViewHolder, position: Int) {
         val restaurante = restaurantes[position]
-        holder.bind(restaurante, onEliminarClick)
+        holder.bind(restaurante, onEdit, onEliminarClick)
     }
 
     override fun getItemCount(): Int = restaurantes.size

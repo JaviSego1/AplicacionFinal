@@ -99,76 +99,24 @@ class RestaurantesActivity : AppCompatActivity() {
     }
 
     private fun agregarRestaurante() {
-        val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        val dialogLayout = inflater.inflate(R.layout.dialog_nuevo_restaurante, null)
-
-        val edtTitulo = dialogLayout.findViewById<EditText>(R.id.edtTitulo)
-        val edtDescripcion = dialogLayout.findViewById<EditText>(R.id.edtDescripcion)
-
-        builder.setTitle("Agregar nuevo restaurante")
-        builder.setView(dialogLayout)
-
-        builder.setPositiveButton("Agregar") { dialog, _ ->
-            val titulo = edtTitulo.text.toString()
-            val descripcion = edtDescripcion.text.toString()
-
-            if (titulo.isNotEmpty() && descripcion.isNotEmpty()) {
-                val nuevoRestaurante = Restaurante(titulo, descripcion, "nuevo_restaurante")
-                listaRestaurantes.add(nuevoRestaurante)
-                adapter.notifyItemInserted(listaRestaurantes.size - 1)
-            } else {
-                Toast.makeText(this, "Por favor ingresa un título y una descripción", Toast.LENGTH_SHORT).show()
-            }
-
-            dialog.dismiss()
+        val dialogFragment = AgregarRestauranteDialogFragment()
+        dialogFragment.setOnGuardarClickListener { titulo, descripcion ->
+            val nuevoRestaurante = Restaurante(titulo, descripcion, "nuevo_restaurante")
+            listaRestaurantes.add(nuevoRestaurante)
+            adapter.notifyItemInserted(listaRestaurantes.size - 1)
         }
-
-        builder.setNegativeButton("Cancelar") { dialog, _ ->
-            dialog.dismiss()
-        }
-
-        builder.show()
+        dialogFragment.show(supportFragmentManager, "AgregarRestauranteDialog")
     }
-
 
     private fun editarRestaurante(restaurante: Restaurante) {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_editar_restaurante, null)
-        val etTitulo = dialogView.findViewById<EditText>(R.id.etTitulo)
-        val etDescripcion = dialogView.findViewById<EditText>(R.id.etDescripcion)
-        val btnGuardar = dialogView.findViewById<Button>(R.id.btnGuardar)
-
-        // Pre-cargar los valores actuales del restaurante en los campos del diálogo
-        etTitulo.setText(restaurante.titulo)
-        etDescripcion.setText(restaurante.descripcion)
-
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("Editar Restaurante")
-            .setView(dialogView)
-            .setCancelable(true)
-            .create()
-
-        // Acción de guardar los cambios
-        btnGuardar.setOnClickListener {
-            val nuevoTitulo = etTitulo.text.toString()
-            val nuevaDescripcion = etDescripcion.text.toString()
-
-            if (nuevoTitulo.isNotEmpty() && nuevaDescripcion.isNotEmpty()) {
-                // Actualizar el restaurante en la lista
-                restaurante.titulo = nuevoTitulo
-                restaurante.descripcion = nuevaDescripcion
-
-                // Notificar al adaptador que se ha hecho un cambio
-                adapter.notifyItemChanged(listaRestaurantes.indexOf(restaurante))
-                dialog.dismiss() // Cerrar el diálogo
-            } else {
-                Toast.makeText(this, "Todos los campos deben ser llenados", Toast.LENGTH_SHORT).show()
-            }
+        val dialogFragment = EditarRestauranteDialogFragment(restaurante)
+        dialogFragment.setOnGuardarClickListener { nuevoTitulo, nuevaDescripcion ->
+            restaurante.titulo = nuevoTitulo
+            restaurante.descripcion = nuevaDescripcion
+            adapter.notifyItemChanged(listaRestaurantes.indexOf(restaurante))
         }
-
-        dialog.show()
+        dialogFragment.show(supportFragmentManager, "EditarRestauranteDialog")
     }
-
 
     private fun eliminarRestaurante(restaurante: Restaurante) {
         val position = listaRestaurantes.indexOf(restaurante)

@@ -22,7 +22,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityPrincipal"
+            android:name=".AgregarRestauranteDialogFragment"
+            android:exported="false">
+        </activity>
+        <activity
+            android:name=".EditarRestauranteDialogFragment"
             android:exported="false">
         </activity>
         <activity

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "172094258649",
+    "project_id": "flavors-of-the-world-2",
+    "storage_bucket": "flavors-of-the-world-2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172094258649:android:436460f3071982f761adc8",
+        "android_client_info": {
+          "package_name": "com.example.aplicacionfinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvz2solFMLusDVXV5trxqP2v4bbNxtomw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

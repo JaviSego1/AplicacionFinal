@@ -1,7 +1,11 @@
 package com.example.aplicacionfinal
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -14,9 +18,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplicacionfinal.adapter.RestauranteAdapter
 import com.example.aplicacionfinal.databinding.ActivityRestauranteBinding
 import com.example.aplicacionfinal.modelos.Restaurante
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class RestaurantesActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var binding: ActivityRestauranteBinding
     private lateinit var adapter: RestauranteAdapter
     private val listaRestaurantes = mutableListOf<Restaurante>()
@@ -33,6 +42,9 @@ class RestaurantesActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        auth = Firebase.auth
+        sharedPreferences = getSharedPreferences("PreferenciasApp", Context.MODE_PRIVATE)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
@@ -86,7 +98,6 @@ class RestaurantesActivity : AppCompatActivity() {
         )
         binding.recyclerView.adapter = adapter
 
-        // Lógica para el botón "Volver"
         binding.btnVolver.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -125,6 +136,4 @@ class RestaurantesActivity : AppCompatActivity() {
             adapter.notifyItemRemoved(position)
         }
     }
-
-
 }

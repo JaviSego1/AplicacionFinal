@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aplicacionfinal.adapter.RestauranteAdapter
 import com.example.aplicacionfinal.databinding.ActivityRestauranteBinding
 import com.example.aplicacionfinal.modelos.Restaurante
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
@@ -34,6 +33,16 @@ class RestaurantesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        auth = FirebaseAuth.getInstance()
+
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
         binding = ActivityRestauranteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -43,7 +52,6 @@ class RestaurantesActivity : AppCompatActivity() {
             insets
         }
 
-        auth = Firebase.auth
         sharedPreferences = getSharedPreferences("PreferenciasApp", Context.MODE_PRIVATE)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -99,9 +107,7 @@ class RestaurantesActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         binding.btnVolver.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            cerrarSesion()
         }
 
         binding.btnAgregar.setOnClickListener {
@@ -135,5 +141,12 @@ class RestaurantesActivity : AppCompatActivity() {
             listaRestaurantes.removeAt(position)
             adapter.notifyItemRemoved(position)
         }
+    }
+
+    private fun cerrarSesion() {
+        auth.signOut()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

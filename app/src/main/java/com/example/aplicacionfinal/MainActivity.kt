@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             val password = binding.etPass.text.toString()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Por favor, llena todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Por favor, rellena todos los campos", Toast.LENGTH_SHORT).show()
             } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(this, "Correo electrónico inválido", Toast.LENGTH_SHORT).show()
             } else if (password.length < 6) {
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             if (email.isNotEmpty()) {
                 recuperarContrasena(email)
             } else {
-                Toast.makeText(this, "Ingrese su correo para recuperar la contraseña", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Ingrese el correo electronico para recuperar la contraseña", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
                     if (user != null && user.isEmailVerified) {
                         ResturantesActivity()
                     } else {
-                        Toast.makeText(this, "Debes verificar tu correo antes de iniciar sesión", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Verifica tu correo antes de iniciar sesión", Toast.LENGTH_LONG).show()
                         auth.signOut()
                     }
                 } else {
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Correo de recuperación enviado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Correo de recuperación de contraseña enviado", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }

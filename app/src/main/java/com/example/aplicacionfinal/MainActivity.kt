@@ -29,6 +29,16 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        // Verificar si el usuario está logueado
+        val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+
+        if (!isLoggedIn) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         // Configurar la toolbar
         val toolbar = binding.appBarLayoutDrawer.toolbar
         setSupportActionBar(toolbar)
@@ -78,6 +88,8 @@ class MainActivity : AppCompatActivity() {
             R.id.fragmentCerrarSesion -> {
                 // Cerrar sesión con Firebase
                 firebaseAuth.signOut()
+                val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+                sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
                 finish()

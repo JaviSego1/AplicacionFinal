@@ -28,4 +28,6 @@
         android:name="com.example.aplicacionfinal.fragments.detalles.Detalles"
         android:label="fragment_detalles"
         tools:layout="@layout/fragment_detalles" />
+
+
 </navigation>

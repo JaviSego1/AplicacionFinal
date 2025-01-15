@@ -36,6 +36,7 @@
         <!-- FragmentContainerView para navegación -->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
@@ -44,19 +45,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
-
-        <!-- RecyclerView centrado verticalmente -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="16dp"
-            android:background="@drawable/recycler_background"
-            app:layout_constraintTop_toBottomOf="@id/nav_host_fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.5"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,7 +6,6 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aplicacionfinal.databinding.ActivityLoginBinding
-import com.example.aplicacionfinal.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -22,9 +21,12 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        // Verificar si el usuario ya está logueado
         val currentUser = auth.currentUser
         if (currentUser != null && currentUser.isEmailVerified) {
-            ResturantesActivity()
+            val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+            sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+            navigateToMainActivity()
         }
 
         binding.btnValidate.setOnClickListener {
@@ -63,7 +65,9 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     if (user != null && user.isEmailVerified) {
-                        ResturantesActivity()
+                        val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+                        sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+                        navigateToMainActivity()
                     } else {
                         Toast.makeText(this, "Verifica tu correo antes de iniciar sesión", Toast.LENGTH_LONG).show()
                         auth.signOut()
@@ -77,7 +81,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun ResturantesActivity() {
+    private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
@@ -93,6 +97,4 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
     }
-
-
 }

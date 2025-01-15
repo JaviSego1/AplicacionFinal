@@ -5,18 +5,23 @@
         android:id="@+id/fragmentHome"
         android:icon="@drawable/baseline_add_home_24"
         android:title="Home"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/fragmentFiltro"
+        android:icon="@drawable/baseline_construction_24"
+        android:title="Filtro"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/fragmentConfiguracion"
         android:icon="@drawable/baseline_construction_24"
         android:title="Configuracion"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/fragmentCerrarSesion"
         android:icon="@drawable/baseline_construction_24"
-        android:title="Configuracion"
-        app:showAsAction="ifRoom" />
-
+        android:title="Cerrar Sesion"
+        app:showAsAction="never" />
 </menu>

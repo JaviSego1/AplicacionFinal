@@ -39,7 +39,7 @@ class RegistroActivity : AppCompatActivity() {
         }
 
         binding.btnVolver.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -53,7 +53,7 @@ class RegistroActivity : AppCompatActivity() {
                     user?.sendEmailVerification()?.addOnCompleteListener { verificationTask ->
                         if (verificationTask.isSuccessful) {
                             Toast.makeText(this, "Registro exitoso. Verifica tu correo para iniciar sesión.", Toast.LENGTH_LONG).show()
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent = Intent(this, LoginActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {

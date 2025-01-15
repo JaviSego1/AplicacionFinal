@@ -25,7 +25,7 @@ class RestaurantesFragment : Fragment (){
 
         val currentUser = auth.currentUser
         if (currentUser == null) {
-            val intent = Intent(requireContext(), MainActivity::class.java)
+            val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()
             return
@@ -124,7 +124,7 @@ class RestaurantesFragment : Fragment (){
 
     private fun cerrarSesion() {
         auth.signOut()
-        val intent = Intent(requireContext(), MainActivity::class.java)
+        val intent = Intent(requireContext(), LoginActivity::class.java)
         startActivity(intent)
         activity?.finish()
     }

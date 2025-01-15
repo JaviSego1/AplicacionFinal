@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".RestaurantesActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -40,7 +41,7 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"
             app:layout_constraintTop_toBottomOf="@id/app_bar_layout_drawer"
-            app:layout_constraintBottom_toTopOf="@id/btnAgregar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -52,33 +53,10 @@
             android:padding="16dp"
             android:background="@drawable/recycler_background"
             app:layout_constraintTop_toBottomOf="@id/nav_host_fragment"
-            app:layout_constraintBottom_toTopOf="@id/btnAgregar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintVertical_bias="0.5"/>
-
-        <!-- Botón Agregar Restaurante -->
-        <Button
-            android:id="@+id/btnAgregar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Agregar Restaurante"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"/>
-
-        <!-- Botón Cerrar sesión alineado con Agregar Restaurante -->
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cerrar sesión"
-            app:layout_constraintTop_toBottomOf="@+id/btnAgregar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

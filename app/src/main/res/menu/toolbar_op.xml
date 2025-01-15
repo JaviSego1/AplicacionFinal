@@ -19,7 +19,4 @@
         android:title="Configuracion"
         app:showAsAction="ifRoom" />
 
-
-
-
 </menu>

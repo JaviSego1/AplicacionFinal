@@ -36,7 +36,9 @@ class MainActivity : AppCompatActivity() {
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
 
         if (!isLoggedIn) {
+            // Redirigir al LoginActivity y limpiar la pila de actividades
             val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
         }
@@ -72,8 +74,9 @@ class MainActivity : AppCompatActivity() {
                     val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
                     sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
 
-                    // Redirigir al LoginActivity
+                    // Redirigir al LoginActivity y limpiar la pila de actividades
                     val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
 
                     // Cerrar la actividad actual (opcional, dependiendo de tu flujo)
@@ -137,6 +140,7 @@ class MainActivity : AppCompatActivity() {
                 val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
                 sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
                 val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
                 true

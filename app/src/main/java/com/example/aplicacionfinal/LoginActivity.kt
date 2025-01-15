@@ -2,7 +2,6 @@ package com.example.aplicacionfinal
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.aplicacionfinal.databinding.ActivityLoginBinding
@@ -10,91 +9,40 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
-
-        // Verificar si el usuario ya está logueado
-        val currentUser = auth.currentUser
-        if (currentUser != null && currentUser.isEmailVerified) {
-            val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
-            sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
-            navigateToMainActivity()
-        }
+        firebaseAuth = FirebaseAuth.getInstance()
 
         binding.btnValidate.setOnClickListener {
             val email = binding.etUser.text.toString()
             val password = binding.etPass.text.toString()
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Por favor, rellena todos los campos", Toast.LENGTH_SHORT).show()
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                Toast.makeText(this, "Correo electrónico inválido", Toast.LENGTH_SHORT).show()
-            } else if (password.length < 6) {
-                Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
-            } else {
-                loginUser(email, password)
-            }
-        }
+            if (email.isNotEmpty() && password.isNotEmpty()) {
+                firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Guardar el estado de sesión en SharedPreferences
+                            val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+                            sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
 
-        binding.btnRegistro.setOnClickListener {
-            val intent = Intent(this, RegistroActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.btnRecuperar.setOnClickListener {
-            val email = binding.etUser.text.toString().trim()
-            if (email.isNotEmpty()) {
-                recuperarContrasena(email)
-            } else {
-                Toast.makeText(this, "Ingrese el correo electronico para recuperar la contraseña", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun loginUser(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    if (user != null && user.isEmailVerified) {
-                        val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
-                        sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
-                        navigateToMainActivity()
-                    } else {
-                        Toast.makeText(this, "Verifica tu correo antes de iniciar sesión", Toast.LENGTH_LONG).show()
-                        auth.signOut()
+                            // Redirigir a MainActivity
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                } else {
-                    Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
-                }
+            } else {
+                Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun navigateToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun recuperarContrasena(email: String) {
-        auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Correo de recuperación de contraseña enviado", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
+        }
     }
 }

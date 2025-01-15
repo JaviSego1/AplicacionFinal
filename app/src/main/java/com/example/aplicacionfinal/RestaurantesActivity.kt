@@ -1,5 +1,6 @@
 package com.example.aplicacionfinal
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -11,18 +12,22 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.aplicacionfinal.databinding.ActivityRestauranteBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class RestaurantesActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityRestauranteBinding
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityRestauranteBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        firebaseAuth = FirebaseAuth.getInstance()
 
         // Configurar la toolbar
         val toolbar = binding.appBarLayoutDrawer.toolbar
@@ -70,8 +75,15 @@ class RestaurantesActivity : AppCompatActivity() {
                 navController.navigate(R.id.fragmentFiltro)
                 true
             }
+            R.id.fragmentCerrarSesion -> {
+                // Cerrar sesión con Firebase
+                firebaseAuth.signOut()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 }
-

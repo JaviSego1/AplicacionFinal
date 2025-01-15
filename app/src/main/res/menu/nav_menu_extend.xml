@@ -5,7 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item android:title="Home"
-
             android:id="@+id/fragmentHome"
             android:icon="@drawable/baseline_add_home_24"
             />
@@ -17,10 +16,10 @@
             android:id="@+id/fragmentConfiguracion"
             android:icon="@drawable/baseline_construction_24"
             />
+
+        <item android:title="Cerrar Sesion"
+            android:id="@+id/fragmentCerrarSesion"
+            android:icon="@drawable/baseline_construction_24"
+            />
     </group>
-    <item android:title="" >
-        <menu >
-            <item android:title="Cerrar Sesion" />
-        </menu>
-    </item>
 </menu>

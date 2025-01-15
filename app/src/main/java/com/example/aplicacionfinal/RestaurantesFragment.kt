@@ -10,7 +10,7 @@ import com.example.aplicacionfinal.databinding.FragmentRestaurantesBinding
 import com.example.aplicacionfinal.modelos.Restaurante
 import com.google.firebase.auth.FirebaseAuth
 
-class RestaurantesFragment : Fragment (){
+class RestaurantesFragment : Fragment (R.layout.fragment_restaurantes){
 
     private lateinit var auth: FirebaseAuth
     private lateinit var sharedPreferences: SharedPreferences

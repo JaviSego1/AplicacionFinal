@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
-                R.id.fragmentHome -> {
+                R.id.restaurantesFragment -> {
                     // Navegar al fragment Home
                     navController.navigate(R.id.restaurantesFragment)
                     binding.drawerLayout.closeDrawer(GravityCompat.START)

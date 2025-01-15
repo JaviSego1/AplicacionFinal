@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,6 +14,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.aplicacionfinal.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,6 +60,50 @@ class MainActivity : AppCompatActivity() {
 
         // Configurar el NavigationView con el navController
         navView.setupWithNavController(navController)
+
+        // Configurar el listener para los ítems del menú en el NavigationView
+        navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.fragmentCerrarSesion -> {
+                    // Cerrar sesión con Firebase
+                    firebaseAuth.signOut()
+
+                    // Actualizar SharedPreferences
+                    val sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+                    sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
+
+                    // Redirigir al LoginActivity
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+
+                    // Cerrar la actividad actual (opcional, dependiendo de tu flujo)
+                    finish()
+
+                    // Cerrar el Drawer
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.fragmentHome -> {
+                    // Navegar al fragment Home
+                    navController.navigate(R.id.restaurantesFragment)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.fragmentConfiguracion -> {
+                    // Navegar al fragment Configuración
+                    navController.navigate(R.id.fragmentConfiguracion)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.fragmentFiltro -> {
+                    // Navegar al fragment Filtro
+                    navController.navigate(R.id.fragmentFiltro)
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     // Este método permite que funcione correctamente el botón de navegación hacia arriba (hamburguesa/retroceso)

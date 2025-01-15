@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/restaurantesFragment">
+
+    <fragment
+        android:id="@+id/restaurantesFragment"
+        android:name="com.example.aplicacionfinal.RestaurantesFragment"
+        android:label="fragment_restaurantes"
+        tools:layout="@layout/fragment_restaurantes" />
+
+    <fragment
+        android:id="@+id/fragmentConfiguracion"
+        android:name="fragments.configuracion.Configuracion"
+        android:label="fragment_conf"
+        tools:layout="@layout/fragment_conf" />
+
+    <fragment
+        android:id="@+id/fragmentFiltro"
+        android:name="fragments.filtro.Configuracion"
+        android:label="fragment_filtro"
+        tools:layout="@layout/fragment_filtro" />
+
+    <fragment
+        android:id="@+id/fragmentDetalles"
+        android:name="fragments.filtro.Configuracion"
+        android:label="fragment_detalles"
+        tools:layout="@layout/fragment_detalles" />
+</navigation>

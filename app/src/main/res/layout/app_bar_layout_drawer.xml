@@ -11,11 +11,6 @@
         android:layout_height="wrap_content">
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Contenido Principal -->
-    <include
-        layout="@layout/content_ppal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar

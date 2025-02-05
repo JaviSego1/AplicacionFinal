@@ -5,7 +5,7 @@
 
     <group android:checkableBehavior="single">
         <item android:title="Restaurantes"
-            android:id="@+id/fragmentHome"
+            android:id="@+id/restaurantesFragment"
             android:icon="@drawable/baseline_add_home_24"
             />
         <item android:title="Filtro"
